@@ -1,0 +1,7 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.compiler.nullAnalysis.nonnull": [
+        "org.jetbrains.annotations.NotNull"
+    ]
+}
