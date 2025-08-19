@@ -4,9 +4,8 @@
 # Ignore Gradle build output directory
 build
 
-# IntelliJ IDEA project files
-*.iml
-.idea/
+# VScode project files
+.vscode
 
 # Logs
 *.log
@@ -36,10 +35,8 @@ Thumbs.db
 # Kotlin-specific
 *.kotlin_metadata
 
-# Exclude generated sources
 app/build/
-app/src/main/resources/config.yml
-app/src/main/resources/plugin.yml
+app/test/
 
 # Exclude temporary Gradle files
 tmp/

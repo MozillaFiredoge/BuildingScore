@@ -1,0 +1,13 @@
+tiers:
+  - name: 0-Dark Age
+    min: 0.0
+    max: 1.0
+  - name: 1-Shelter
+    min: 1.0
+    max: 100.0
+  - name: 2-Fortress
+    min: 100.0
+    max: 500.0
+  - name: 3-Castle
+    min: 500.0
+    max: 10000.0
