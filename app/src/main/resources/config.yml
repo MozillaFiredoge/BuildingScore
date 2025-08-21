@@ -11,3 +11,10 @@ tiers:
   - name: 3-Castle
     min: 500.0
     max: 10000.0
+
+outpost-structure:
+  - "0,0,0,AIR"
+  - "0,-1,0,CHEST"
+  - "1,0,0,COBBLESTONE"
+  - "0,0,1,COBBLESTONE"
+  - "-1,0,0,COBBLESTONE"

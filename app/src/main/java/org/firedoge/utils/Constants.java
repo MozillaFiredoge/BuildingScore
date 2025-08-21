@@ -9,4 +9,5 @@ public enum Constants {
     public static final double PLAYER_GROUP_DISTANCE = 100.0; // blocks
     public static final double UPDATE_FREQUENCY = 10; // save chunk per blocks
     public static final long MOB_SPAWN_INTERVAL = 20L * 60L * 1L; // 1 minutes
+    public static final int MAX_MONSTER_SPAWN_COUNT = 80; // Maximum number of monsters to spawn
 }

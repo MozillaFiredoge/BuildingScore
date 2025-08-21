@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,12 +16,10 @@ import org.firedoge.utils.Constants;
 
 public class DifficultyManager {
 
-
     private void changeDifficulty() {
         Map<Double, List<Player>> groupScores = calMeanScoreForGroup();
         
         if(groupScores.isEmpty()) {
-            
             return; // No players to process
         }
 
@@ -49,7 +48,7 @@ public class DifficultyManager {
                 }
                 double groupMean = sum / numSum;
                 if(Main.getPlugin().isInDebugMode)
-                    System.out.println("[DifficultyManager] Group " + rangeKey + " mean score: " + groupMean + " with players: " + players);
+                    Main.getPlugin().getLogger().log(Level.FINE, "[DifficultyManager] Group {0} mean score: {1} with players: {2}", new Object[]{rangeKey, groupMean, players});
                 groupScores.put(groupMean, players);
             });
         });

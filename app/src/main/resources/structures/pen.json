@@ -1,0 +1,60 @@
+{
+  "blocks": [
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dtrue,north\u003dfalse,south\u003dtrue,waterlogged\u003dfalse,west\u003dfalse]"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "material": "OAK_FENCE_GATE",
+      "blockDataString": "minecraft:oak_fence_gate[facing\u003dwest,in_wall\u003dfalse,open\u003dfalse,powered\u003dfalse]"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 2,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dtrue,north\u003dtrue,south\u003dfalse,waterlogged\u003dfalse,west\u003dfalse]"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dtrue,north\u003dfalse,south\u003dfalse,waterlogged\u003dfalse,west\u003dtrue]"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 2,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dtrue,north\u003dfalse,south\u003dfalse,waterlogged\u003dfalse,west\u003dtrue]"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 0,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dfalse,north\u003dfalse,south\u003dtrue,waterlogged\u003dfalse,west\u003dtrue]"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 1,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dfalse,north\u003dtrue,south\u003dtrue,waterlogged\u003dfalse,west\u003dfalse]"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 2,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dfalse,north\u003dtrue,south\u003dfalse,waterlogged\u003dfalse,west\u003dtrue]"
+    }
+  ]
+}

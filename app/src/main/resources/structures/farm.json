@@ -1,0 +1,67 @@
+{
+  "blocks": [
+    {
+      "x": 0,
+      "y": -1,
+      "z": 0,
+      "material": "FARMLAND",
+      "blockDataString": "minecraft:farmland[moisture\u003d7]"
+    },
+    {
+      "x": 0,
+      "y": -1,
+      "z": 1,
+      "material": "FARMLAND",
+      "blockDataString": "minecraft:farmland[moisture\u003d0]"
+    },
+    {
+      "x": 0,
+      "y": -1,
+      "z": 2,
+      "material": "FARMLAND",
+      "blockDataString": "minecraft:farmland[moisture\u003d7]"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "material": "WHEAT",
+      "blockDataString": "minecraft:wheat[age\u003d5]"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "material": "WHEAT",
+      "blockDataString": "minecraft:wheat[age\u003d0]"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 2,
+      "material": "WHEAT",
+      "blockDataString": "minecraft:wheat[age\u003d4]"
+    },
+    {
+      "x": 1,
+      "y": -1,
+      "z": 0,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003deast,half\u003dbottom,shape\u003dstraight,waterlogged\u003dtrue]"
+    },
+    {
+      "x": 1,
+      "y": -1,
+      "z": 1,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003deast,half\u003dbottom,shape\u003dstraight,waterlogged\u003dtrue]"
+    },
+    {
+      "x": 1,
+      "y": -1,
+      "z": 2,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003deast,half\u003dbottom,shape\u003dstraight,waterlogged\u003dtrue]"
+    }
+  ]
+}

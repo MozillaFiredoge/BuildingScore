@@ -1,8 +1,11 @@
 package org.firedoge.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
+import javax.annotation.Nullable;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,40 +19,98 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Ravager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.firedoge.Main;
+import org.firedoge.utils.Constants;
+
+import net.kyori.adventure.text.Component;
 
 public class MobSpawn {
-    private static final Random random = ThreadLocalRandom.current();
 
+
+
+
+    private static final Random random = ThreadLocalRandom.current();
+    private List<Player> players = new ArrayList<>();
+    private int totalCount = 0;
+
+
+
+
+    
     private void spawnMonsters(List<Player> players, int baseCount, MonsterTier tier) {
         if (players.isEmpty())
             return;
+        
+        if (totalCount >= Constants.MAX_MONSTER_SPAWN_COUNT) {
+            totalCount = 0; // Reset count if it exceeds the limit
+            return;
+        }
 
+        this.players = players;
         Location center = calculateGroupCenter(players);
         int playerCount = players.size();
         // adjust mobs' count based on number of players
-        int monsterCount = baseCount + (int) (playerCount * 1.5);
+        int monsterCount = baseCount + (int) (playerCount * 5);
 
         for (int i = 0; i < monsterCount; i++) {
-            // spawn at a circular area around the center(Radius: 50)
-            Location spawnLoc = center.clone().add(
-                    random.nextDouble() * 150 - 75,
-                    0,
-                    random.nextDouble() * 150 - 75);
+            
+            double minDist = (tier == MonsterTier.LOW) ? 24 : 50;
+            double maxDist = (tier == MonsterTier.LOW) ? 50 : 128;
 
-            // Make sure it's safe to spawn
+            Location spawnLoc = findLegalSpawnPoint(center, minDist, maxDist);
+            if (spawnLoc == null) continue; 
             World w = spawnLoc.getWorld();
-            if (w == null)
-                continue;
-            double y = w.getHighestBlockYAt(spawnLoc);
-            spawnLoc.setY(y + 1);
+            if (w == null) continue;
+
 
             EntityType type = selectMonsterType(tier);
             LivingEntity entity = (LivingEntity) w.spawnEntity(spawnLoc, type);
 
+
+            if (Main.getPlugin().isInDebugMode)
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, Integer.MAX_VALUE, 1));
+
+
             enhanceMonster(entity, tier, playerCount);
+
+            totalCount++;
         }
+    }
+
+
+    @Nullable
+    private Location findLegalSpawnPoint(Location center, double minDist, double maxDist) {
+        for (int tries = 0; tries < 15; tries++) { // 最多尝试15次
+            double angle = random.nextDouble() * 2 * Math.PI;
+
+            double distance = minDist + random.nextDouble() * (maxDist - minDist);
+            double offsetX = distance * Math.cos(angle);
+            double offsetZ = distance * Math.sin(angle);
+
+            Location candidate = center.clone().add(offsetX, 0, offsetZ);
+            World w = candidate.getWorld();
+            if (w == null)
+                continue;
+
+            
+            candidate = w.getHighestBlockAt(candidate).getLocation().add(0, 1, 0);
+
+            
+            int light = candidate.getBlock().getLightLevel();
+            if (light > 7)
+                continue;
+
+            
+            if (!candidate.clone().subtract(0, 1, 0).getBlock().getType().isSolid())
+                continue;
+            if (!candidate.getBlock().isEmpty())
+                continue;
+
+            return candidate;
+        }
+        return null;
     }
 
     private Location calculateGroupCenter(List<Player> players) {
@@ -67,78 +128,165 @@ public class MobSpawn {
     }
 
     private EntityType selectMonsterType(MonsterTier tier) {
-        return switch (tier) {
-            case LOW -> random.nextBoolean() ? EntityType.ZOMBIE : EntityType.SKELETON;
-            case MEDIUM -> random.nextBoolean() ? EntityType.SPIDER : EntityType.CAVE_SPIDER;
-            case HIGH -> random.nextBoolean() ? EntityType.ENDERMAN : EntityType.PILLAGER;
-            case VERY_HIGH -> random.nextBoolean() ? EntityType.RAVAGER : EntityType.WITHER_SKELETON;
-            default -> EntityType.ZOMBIE;
-        };
-    }
-
-    private void enhanceMonster(LivingEntity entity, MonsterTier tier, int playerCount) {
-
-        double playerFactor = 1 + (playerCount * 0.1);
+        List<EntityType> pool = new ArrayList<>();
 
         switch (tier) {
             case LOW -> {
-                entity.addPotionEffect(new PotionEffect(
-                        PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 1));
-                setEntityScale(entity, 0.2);
+                
+                pool.add(EntityType.ZOMBIE);
+                pool.add(EntityType.SKELETON);
+                pool.add(EntityType.VINDICATOR);
+                pool.add(EntityType.HUSK);
+                pool.add(EntityType.DROWNED);
+            }
+            case MEDIUM -> {
+                pool.add(EntityType.SPIDER);
+                pool.add(EntityType.CAVE_SPIDER);
+            }
+            case HIGH -> {
+                pool.add(EntityType.ENDERMAN);
+                pool.add(EntityType.ENDERMITE);
+                pool.add(EntityType.PHANTOM);
+            }
+            case VERY_HIGH -> {
+                
+                pool.add(EntityType.RAVAGER);
+                pool.add(EntityType.WITHER_SKELETON);
+                pool.add(EntityType.EVOKER);
+            }
+        }
+
+        return pool.get(random.nextInt(pool.size()));
+    }
+
+    private void enhanceMonster(LivingEntity entity, MonsterTier tier, int playerCount) {
+        double playerFactor = 1 + (playerCount * 0.1);
+        if (entity == null)
+            return;
+        switch (tier) {
+            case LOW -> {
+                setEntityScale(entity, 0.5);
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0));
             }
 
             case MEDIUM -> {
-                entity.addPotionEffect(new PotionEffect(
-                        PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0));
-                entity.addPotionEffect(new PotionEffect(
-                        PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
                 setEntityScale(entity, 2.0);
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0));
+
                 if (random.nextDouble() < 0.3)
                     addWebShotAbility(entity);
+                if (random.nextDouble() < 0.2)
+                    addPoisonArrow(entity);
+                spawnLowTierMonsters(players);
             }
 
             case HIGH -> {
-                entity.addPotionEffect(new PotionEffect(
-                        PotionEffectType.RESISTANCE, Integer.MAX_VALUE, 1));
-                entity.addPotionEffect(new PotionEffect(
-                        PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
                 setEntityScale(entity, 5.0);
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, Integer.MAX_VALUE, 1));
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
 
                 if (entity instanceof Phantom phantom) {
-                    phantom.setSize(6 + random.nextInt(6));
+                    phantom.setSize(8 + random.nextInt(4));
                 }
                 if (random.nextDouble() < 0.5)
                     addAuraEffect(entity);
+                if (random.nextDouble() < 0.3)
+                    addBlinkAbility(entity);
+                spawnMediumTierMonsters(players);
             }
 
             case VERY_HIGH -> {
-                setEntityScale(entity, 3.0 + (playerFactor * 0.5));
-                entity.addPotionEffect(new PotionEffect(
-                        PotionEffectType.RESISTANCE, Integer.MAX_VALUE, 2));
-                entity.addPotionEffect(new PotionEffect(
-                        PotionEffectType.STRENGTH, Integer.MAX_VALUE, 1));
-                setEntityScale(entity, 10.0);
+                setEntityScale(entity, 8.0 + playerFactor);
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, Integer.MAX_VALUE, 3));
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, Integer.MAX_VALUE, 2));
 
                 if (entity instanceof Ravager ravager) {
                     addGroundSlamAbility(ravager);
                 } else {
                     addDarkAura(entity);
                 }
+
+                if (random.nextDouble() < 0.4)
+                    addMinionSummon(entity);
             }
-
         }
+    }
 
+
+    private void addPoisonArrow(LivingEntity entity) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (entity.isDead())
+                    cancel();
+                Player target = findNearestPlayerWithinRange(entity, 3);
+                if (target == null)
+                    return;
+                Location loc = target.getLocation();
+                if (loc == null)
+                    return;
+                if (loc.distance(entity.getLocation()) < 15) {
+                    target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 1));
+                    target.getWorld().spawnParticle(org.bukkit.Particle.SPORE_BLOSSOM_AIR, loc, 20);
+                }
+            }
+        }.runTaskTimer(Main.getPlugin(), 0, 100);
+    }
+
+    private void addBlinkAbility(LivingEntity entity) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (entity.isDead())
+                    cancel();
+                Player target = findNearestPlayerWithinRange(entity, 3);
+                if (target == null)
+                    return;
+                Location loc = target.getLocation();
+                if (loc == null)
+                    return;
+                if (random.nextDouble() < 0.3) {
+                    entity.teleport(loc.add(random.nextInt(3) - 1, 0, random.nextInt(3) - 1));
+                    entity.getWorld().spawnParticle(org.bukkit.Particle.PORTAL, entity.getLocation(), 50);
+                }
+            }
+        }.runTaskTimer(Main.getPlugin(), 0, 120);
+    }
+
+    private void addMinionSummon(LivingEntity entity) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (entity.isDead())
+                    cancel();
+                Location loc = entity.getLocation();
+                for (int i = 0; i < 2; i++) {
+                    World w = loc.getWorld();
+                    if (w == null)
+                        return;
+                    LivingEntity minion = (LivingEntity) w.spawnEntity(
+                            loc.clone().add(random.nextInt(3) - 1, 0, random.nextInt(3) - 1),
+                            EntityType.ZOMBIE);
+                    minion.customName(Component.text("§7小随从"));
+                    minion.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
+                }
+                entity.getWorld().spawnParticle(org.bukkit.Particle.SOUL, loc, 30);
+            }
+        }.runTaskTimer(Main.getPlugin(), 0, 300);
     }
 
     // Special Skills
     private void addWebShotAbility(LivingEntity entity) {
-        new org.bukkit.scheduler.BukkitRunnable() {
+        new BukkitRunnable() {
             @Override
             public void run() {
                 if (entity.isDead())
                     this.cancel();
 
-                Player target = findNearestPlayer(entity);
+                Player target = findNearestPlayerWithinRange(entity, 3);
+                if (target == null)
+                    return;
                 Location loc = target.getLocation();
                 if (loc != null && loc.distance(entity.getLocation()) < 12) {
                     target.addPotionEffect(new PotionEffect(
@@ -152,7 +300,7 @@ public class MobSpawn {
 
     private void addAuraEffect(LivingEntity entity) {
 
-        new org.bukkit.scheduler.BukkitRunnable() {
+        new BukkitRunnable() {
             @Override
             public void run() {
                 if (entity.isDead())
@@ -172,7 +320,7 @@ public class MobSpawn {
 
     private void addGroundSlamAbility(Ravager ravager) {
 
-        new org.bukkit.scheduler.BukkitRunnable() {
+        new BukkitRunnable() {
             @Override
             public void run() {
                 if (ravager.isDead())
@@ -206,7 +354,7 @@ public class MobSpawn {
 
     private void addDarkAura(LivingEntity entity) {
 
-        new org.bukkit.scheduler.BukkitRunnable() {
+        new BukkitRunnable() {
             @Override
             public void run() {
                 if (entity.isDead())
@@ -225,33 +373,33 @@ public class MobSpawn {
         }.runTaskTimer(Main.getPlugin(), 0, 20);
     }
 
-    private Player findNearestPlayer(LivingEntity entity) {
+    @Nullable
+    private Player findNearestPlayerWithinRange(LivingEntity entity, double range) {
         return entity.getWorld().getPlayers().stream()
-                .filter(player -> player.getLocation() != null)
+                .filter(player -> {
+                    Location location = player.getLocation();
+                    return location != null && location.distance(entity.getLocation()) <= range;
+                })
                 .min((p1, p2) -> {
                     Location loc1 = p1.getLocation();
                     Location loc2 = p2.getLocation();
                     Location entityLoc = entity.getLocation();
 
-                    
-                    if (loc1 == null)
-                        return 1; // 如果 loc1 为 null，认为 p2 更近
-                    if (loc2 == null)
-                        return -1; // 如果 loc2 为 null，认为 p1 更近
-
+                    if (loc1 == null || loc2 == null)
+                        return 0; 
                     return Double.compare(loc1.distanceSquared(entityLoc), loc2.distanceSquared(entityLoc));
                 })
                 .orElse(null);
     }
 
-    public void setEntityScale(LivingEntity entity, double scale) {
+    public static void setEntityScale(LivingEntity entity, double scale) {
         AttributeInstance scaleAttr = entity.getAttribute(Attribute.SCALE);
         if (scaleAttr != null) {
             scaleAttr.setBaseValue(scale);
         }
     }
 
-    // ======== 对外接口 ========
+
     public void spawnLowTierMonsters(List<Player> players) {
         spawnMonsters(players, 3 + players.size(), MonsterTier.LOW);
     }

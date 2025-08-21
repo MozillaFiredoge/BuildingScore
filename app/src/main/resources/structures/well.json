@@ -1,0 +1,88 @@
+{
+  "blocks": [
+    {
+      "x": 0,
+      "y": -1,
+      "z": 0,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003dnorth,half\u003dbottom,shape\u003dinner_left,waterlogged\u003dtrue]"
+    },
+    {
+      "x": 0,
+      "y": -1,
+      "z": 1,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003dwest,half\u003dbottom,shape\u003dinner_left,waterlogged\u003dtrue]"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dtrue,north\u003dfalse,south\u003dtrue,waterlogged\u003dfalse,west\u003dfalse]"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dtrue,north\u003dtrue,south\u003dfalse,waterlogged\u003dfalse,west\u003dfalse]"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "material": "COBBLESTONE_SLAB",
+      "blockDataString": "minecraft:cobblestone_slab[type\u003dbottom,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "material": "COBBLESTONE_SLAB",
+      "blockDataString": "minecraft:cobblestone_slab[type\u003dbottom,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 1,
+      "y": -1,
+      "z": 0,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003deast,half\u003dbottom,shape\u003dinner_left,waterlogged\u003dtrue]"
+    },
+    {
+      "x": 1,
+      "y": -1,
+      "z": 1,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003dsouth,half\u003dbottom,shape\u003dinner_left,waterlogged\u003dtrue]"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dfalse,north\u003dfalse,south\u003dtrue,waterlogged\u003dfalse,west\u003dtrue]"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "material": "OAK_FENCE",
+      "blockDataString": "minecraft:oak_fence[east\u003dfalse,north\u003dtrue,south\u003dfalse,waterlogged\u003dfalse,west\u003dtrue]"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "material": "COBBLESTONE_SLAB",
+      "blockDataString": "minecraft:cobblestone_slab[type\u003dbottom,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "material": "COBBLESTONE_SLAB",
+      "blockDataString": "minecraft:cobblestone_slab[type\u003dbottom,waterlogged\u003dfalse]"
+    }
+  ]
+}

@@ -5,13 +5,15 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+
+import net.kyori.adventure.text.Component;
+import net.md_5.bungee.api.ChatColor;
 
 public class DiffScoreBoard {
 
@@ -41,7 +43,7 @@ public class DiffScoreBoard {
                 // 使用新的方法注册计分板目标
                 String s = ChatColor.DARK_RED + "☠ " + ChatColor.BOLD + "灾难警报" + ChatColor.DARK_RED + " ☠ ";
                 obj = board.registerNewObjective(objectiveName, Criteria.DUMMY,
-                        s);
+                        Component.text(s));
                 obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
                 String tier = getTierName(tierLevel);

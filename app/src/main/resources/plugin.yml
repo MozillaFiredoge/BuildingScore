@@ -2,9 +2,10 @@ name: BuildingScore
 main: org.firedoge.Main
 version: beta 0.1
 author: Firedoge
+api-version: 1.21
 commands:
-  mbs:
-    description: 查看你的 mean building score 与Tier
-    usage: /mbs
   buildingscore:
     description: get info about the plugin
+  exportstructure:
+    description: 导出一个选区为结构
+    usage: /exportstructure <name>

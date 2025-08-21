@@ -1,0 +1,60 @@
+{
+  "blocks": [
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003dnorth,half\u003dbottom,shape\u003dstraight,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003dsouth,half\u003dbottom,shape\u003dstraight,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "material": "OAK_STAIRS",
+      "blockDataString": "minecraft:oak_stairs[facing\u003dsouth,half\u003dbottom,shape\u003dstraight,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "material": "OAK_STAIRS",
+      "blockDataString": "minecraft:oak_stairs[facing\u003dnorth,half\u003dbottom,shape\u003dstraight,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003dnorth,half\u003dbottom,shape\u003dstraight,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "material": "COBBLESTONE_STAIRS",
+      "blockDataString": "minecraft:cobblestone_stairs[facing\u003dsouth,half\u003dbottom,shape\u003dstraight,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "material": "OAK_STAIRS",
+      "blockDataString": "minecraft:oak_stairs[facing\u003dsouth,half\u003dbottom,shape\u003dstraight,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "material": "OAK_STAIRS",
+      "blockDataString": "minecraft:oak_stairs[facing\u003dnorth,half\u003dbottom,shape\u003dstraight,waterlogged\u003dfalse]"
+    }
+  ]
+}

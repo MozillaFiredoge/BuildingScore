@@ -14,7 +14,12 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
-    maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
+
+    maven {
+        name = "papermc"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
+    }
+
 }
 
 dependencies {
@@ -26,7 +31,8 @@ dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
     implementation("org.xerial:sqlite-jdbc:3.42.0.0")
-    compileOnly("org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+    implementation("org.reflections:reflections:0.10.2")
 
 }
 

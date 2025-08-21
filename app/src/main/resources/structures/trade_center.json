@@ -1,0 +1,32 @@
+{
+  "blocks": [
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "material": "OAK_STAIRS",
+      "blockDataString": "minecraft:oak_stairs[facing\u003deast,half\u003dtop,shape\u003dstraight,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "material": "OAK_STAIRS",
+      "blockDataString": "minecraft:oak_stairs[facing\u003deast,half\u003dtop,shape\u003dstraight,waterlogged\u003dfalse]"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "material": "WHITE_CARPET",
+      "blockDataString": "minecraft:white_carpet"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "material": "YELLOW_CARPET",
+      "blockDataString": "minecraft:yellow_carpet"
+    }
+  ]
+}

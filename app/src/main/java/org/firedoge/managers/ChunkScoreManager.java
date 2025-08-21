@@ -32,10 +32,10 @@ public class ChunkScoreManager {
                     });
                     chunkScores.clear(); // Clear the map after saving to prevent memory leaks
                     chunkInitialized.clear(); // Clear the initialized map as well
-                    System.out.println("[BuildingScore] Saved chunk scores");
+                    Main.getPlugin().getLogger().log(Level.FINE, "Saved chunk scores");
                 } catch (Throwable t) {
                     Main.getPlugin().getLogger().log(Level.SEVERE,
-                            "[BuildingScore] Error in scheduled compute task: {0}",
+                            "Error in scheduled compute task: {0}",
                             t.getMessage());
                 }
             }
@@ -58,12 +58,12 @@ public class ChunkScoreManager {
                 chunkScores.clear();
                 chunkInitialized.clear();
             } catch (SQLException e) {
-                System.err.println("[BuildingScore] Error saving chunk: " + e.getMessage());
+                Main.getPlugin().getLogger().log(Level.WARNING, "Error saving chunk: {0}", e.getMessage());
             } finally {
                 try {
                     db.close(); // Ensure you close the connection after use
                 } catch (SQLException e) {
-                    System.err.println("[BuildingScore] Error closing database connection: " + e.getMessage());
+                    Main.getPlugin().getLogger().log(Level.WARNING, "Error closing database connection: {0}", e.getMessage());
                 }
             }
         });
@@ -94,12 +94,12 @@ public class ChunkScoreManager {
             db.connect();
             scoreObtained = db.getScore(chunkKey);
         } catch (SQLException e) {
-            System.err.println("[BuildingScore] Error loading chunk: " + e.getMessage());
+            Main.getPlugin().getLogger().log(Level.WARNING, "Error loading chunk: {0}", e.getMessage());
         } finally {
             try {
                 db.close(); // Ensure you close the connection after use
             } catch (SQLException e) {
-                System.err.println("[BuildingScore] Error closing database connection: " + e.getMessage());
+                Main.getPlugin().getLogger().log(Level.WARNING, "Error closing database connection: {0}", e.getMessage());
             }
         }
 
@@ -118,12 +118,12 @@ public class ChunkScoreManager {
                     db.connect();
                     chunkScores.put(chunkKey, db.getScore(chunkKey));
                 } catch (SQLException e) {
-                    System.err.println("[BuildingScore] Error initializing chunk: " + e.getMessage());
+                    Main.getPlugin().getLogger().log(Level.WARNING, "Error initializing chunk: {0}", e.getMessage());
                 } finally {
                     try {
                         db.close(); // Ensure you close the connection after use
                     } catch (SQLException e) {
-                        System.err.println("[BuildingScore] Error closing database connection: " + e.getMessage());
+                        Main.getPlugin().getLogger().log(Level.WARNING, "Error closing database connection: {0}", e.getMessage());
                     }
                 }
             }
@@ -138,12 +138,12 @@ public class ChunkScoreManager {
             db.connect();
             return db.recordExists(chunkKey);
         } catch (SQLException e) {
-            System.err.println("[BuildingScore] Error initializing chunk: " + e.getMessage());
+            Main.getPlugin().getLogger().log(Level.WARNING, "Error initializing chunk: {0}", e.getMessage());
         } finally {
             try {
                 db.close(); // Ensure you close the connection after use
             } catch (SQLException e) {
-                System.err.println("[BuildingScore] Error closing database connection: " + e.getMessage());
+                Main.getPlugin().getLogger().log(Level.WARNING, "Error closing database connection: {0}", e.getMessage());
             }
         }
         return false;

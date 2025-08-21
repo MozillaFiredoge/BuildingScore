@@ -16,7 +16,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getLogger().info("[BuildingScore] Plugin Enabled");
+        getLogger().info("Plugin Enabled");
         // Register event listeners and commands here
         instance = this;
         ConfigUtils configUtils = new ConfigUtils();
@@ -31,7 +31,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("buildingscore")) {
+        if (command.getName().equalsIgnoreCase("buildingscore") || command.getName().equalsIgnoreCase("bs")) {
             if(args.length > 0 && args[0].equalsIgnoreCase("reload")){
                 reloadConfig();
                 sender.sendMessage("Configuration reloaded!");
